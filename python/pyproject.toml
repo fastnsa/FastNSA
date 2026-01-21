@@ -1,0 +1,16 @@
+[project]
+name = "fastnsa"
+version = "0.1.0"
+requires-python = ">=3.9"
+description = "Fast Network Spatial Analysis with C++ core"
+dependencies = [
+    "numpy",
+    "pandas",
+    "geopandas",
+    "osmnx",
+    "shapely"
+]
+
+
+[tool.setuptools]
+packages = ["fastnsa"]

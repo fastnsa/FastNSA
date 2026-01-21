@@ -1,0 +1,96 @@
+# Operating System
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env
+.env.local
+.env.*.local
+dist/
+build/
+.next/
+.nuxt/
+.vite/
+.cache/
+.parcel-cache/
+public/build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env/
+.venv/
+venv/
+ENV/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Logs
+logs/
+*.log
+*.log.*
+npm-debug.log*
+yarn-error.log*
+
+# Test/coverage
+coverage/
+.nyc_output/
+coverage-final.json
+htmlcov/
+
+# IDEs / editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+*.swp
+*~ 
+*.tmp
+
+# Build / compiled / binary
+dist/
+build/
+target/
+bin/
+obj/
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.a
+
+# Database / local
+*.sqlite3
+*.db
+*.sql
+*.sqlite
+
+# Docker / environment
+docker-compose.override.yml
+.env.*.local
+secrets.yml
+*.key
+*.pem
+
+# Misc
+Thumbs.db
+.DS_Store
+.tgcache/
+.cache/
+
+.ref
+todo.md
