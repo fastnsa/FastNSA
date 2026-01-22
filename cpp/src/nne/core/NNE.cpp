@@ -4,6 +4,7 @@
 
 #include "nne/core/NNE.h"
 #include <geos/io/WKTReader.h>
+#include <geos/linearref/LengthIndexedLine.h>
 using namespace geos::geom;
 using namespace geos::io;
 
@@ -232,6 +233,22 @@ vector<int> NNE::query_nearest_grid(const  vector<QueryPoint> &query_points, con
 
     return query_nearest(query_points, 1, grid_size,0);
 }
+
+// todo test
+double NNE::project_point_onto_edge(int edge_id, double x, double y) {
+    if (edge_id < 0 || edge_id >= edges.size()) {
+        throw std::out_of_range("Edge ID is out of range.");
+    }
+
+    const auto& geom = edges[edge_id];
+    geos::linearref::LengthIndexedLine lil(geom.get());
+    double offset = lil.project(geos::geom::Coordinate(x, y));
+
+    offset = std::clamp(offset, 0.0, geom->getLength());
+
+    return offset;
+}
+
 
 std::vector<std::unique_ptr<geos::geom::Geometry>> NNE::read_geoms_wkt(const char *filename) {
     std::vector<std::unique_ptr<Geometry>> geoms;

@@ -50,7 +50,7 @@ FASTNSA_API void* fastnsa_map_points(
 /* ---------- Network K-function ---------- */
 // TODO: 修改对应值
 typedef enum {
-    FASTNSA_K_NS = 0,
+    FASTNSA_K_NS = 6,
     FASTNSA_K_SPS = 1,
     FASTNSA_K_STARS = 2
 } fastnsa_k_method;
@@ -69,15 +69,15 @@ FASTNSA_API void fastnsa_compute_k_function(
 
 /* ---------- Network Kernel Density Visualization ---------- */
 // TODO: implement this function in the future
-FASTNSA_API int fastnsa_compute_nkdv(
-    void* net,
-    void* pts,
-    const double* distances,
-    int n,
-    double r_max,
-    int n_bins,
-    double* out_k
-);
+// FASTNSA_API int fastnsa_compute_nkdv(
+//     void* net,
+//     void* pts,
+//     const double* distances,
+//     int n,
+//     double r_max,
+//     int n_bins,
+//     double* out_k
+// );
 
 
 

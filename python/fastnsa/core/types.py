@@ -72,3 +72,11 @@ class KFunctionResult:
     """
     Total length of the network used for analysis.
     """
+    
+    def __getitem__(self, key):
+        if key not in self.__dataclass_fields__:
+            raise KeyError(
+                f"{key!r} is not a valid KFunctionResult field"
+            )
+        return getattr(self, key)
+    

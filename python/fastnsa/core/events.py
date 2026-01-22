@@ -25,8 +25,11 @@ class PointEvents:
         y_ptr = np.ascontiguousarray(points_gdf.geometry.y.values, dtype=np.float64)
 
         # 3. 调用 C++ 执行 Mapping (假设 C++ 侧实现了空间索引加速)
-        self._perform_cpp_mapping(x_ptr, y_ptr)  
+        # self._perform_cpp_mapping(x_ptr, y_ptr)
         self._perform_python_mapping_fallback(points_gdf)
+        
+        
+        
 
     def __del__(self):
         if hasattr(self, '_ptr') and self._ptr:
@@ -47,8 +50,8 @@ class PointEvents:
         import osmnx as ox
 
         # 1. 预分配 C++ 映射结果的内存空间
-        edge_ids = np.zeros(self.n_points, dtype=np.int32)
-        offsets = np.zeros(self.n_points, dtype=np.float64)
+        self.edge_ids = np.zeros(self.n_points, dtype=np.int32)
+        self.offsets = np.zeros(self.n_points, dtype=np.float64)
 
         nearest = ox.nearest_edges(
             self.network.graph, # todo 对接
@@ -73,14 +76,14 @@ class PointEvents:
                 # 针对无向图的兜底判断
                 eid = self.network.edge_id_map.get((v, u, k))
             
-            edge_ids[i] = eid
+            self.edge_ids[i] = eid
             
             # 计算偏移 (这里还是调用了 shapely，在大数据量下会很慢)
             geom:LineString= self.network.graph[u][v][k]['geometry']
-            offsets[i] = geom.project(points_gdf.geometry.iloc[i])
+            self.offsets[i] = geom.project(points_gdf.geometry.iloc[i])
         
         self._ptr = capi.lib.fastnsa_pointset_create(self.network._ptr)
-        self._update_data(edge_ids, offsets)
+        self._update_data(self.edge_ids, self.offsets)
     
     def _update_data(self, edge_ids, offsets):
             capi.lib.fastnsa_pointset_set(

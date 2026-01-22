@@ -3,7 +3,7 @@ import ctypes
 
 
 
-FASTNSA_K_NS = 0
+FASTNSA_K_NS = 6
 FASTNSA_K_SPS = 1
 FASTNSA_K_STARS = 2
 
@@ -27,7 +27,8 @@ lib.fastnsa_network_create.restype = VOID_P
 lib.fastnsa_network_destroy.argtypes = [VOID_P]
 lib.fastnsa_network_destroy.restype = None
 
-lib.fastnsa_network_set_wkbs.argtypes = [VOID_P, P_DOUBLE, P_UINT8,ctypes.c_int]
+# 参数：network_ptr(void*), wkb_data(uint8*), offsets(int*), n_edges(int)
+lib.fastnsa_network_set_wkbs.argtypes = [VOID_P, P_UINT8, P_INT, ctypes.c_int]
 lib.fastnsa_network_set_wkbs.restype = None
 
 
@@ -39,20 +40,10 @@ lib.fastnsa_pointset_destroy.argtypes = [VOID_P]
 lib.fastnsa_pointset_destroy.restype = None
 
 # 将数据从 NumPy 填充进 C++ PointSet 
+# 参数：points_ptr(void*), edge_ids(int*), offsets(double*), n_points(int)
 lib.fastnsa_pointset_set.argtypes = [VOID_P, P_INT, P_DOUBLE, ctypes.c_int]
 lib.fastnsa_pointset_set.restype = ctypes.c_int # 返回状态码
 
-
-
-# 参数：net_ptr(void*), points(double*), n_points(int), edge_ids(int
-
-    # capi.lib.fastnsa_map_points(
-    #     self.network._ptr,
-    #     coords.ctypes.data_as(capi.P_DOUBLE),
-    #     self.n_points,
-    #     self.edge_ids.ctypes.data_as(capi.P_INT),
-    #     self.offsets.data_as(capi.P_DOUBLE)
-    # )
 
 lib.fastnsa_map_points.argtypes = [
     ctypes.c_void_p,  # net_ptr - pointer to the network object
@@ -64,15 +55,16 @@ lib.fastnsa_map_points.restype = VOID_P # 返回一个 PointSet 对象的指针
 
 
 
-# 参数：net_ptr, , n_points, radii, n_radii, out_results
+# 参数：net_ptr, event_ptr, r_values, n_r, k_obs,k_sim
 lib.fastnsa_compute_k_function.argtypes = [
-    VOID_P,  
-    VOID_P,
-    ctypes.c_int,
-    P_DOUBLE,      # radii
-    ctypes.c_int, # n_radii
+    VOID_P,   # network_ptr
+    VOID_P,   # point_set_ptr
+    P_DOUBLE,      # r_values
+    ctypes.c_int, # n_r
     ctypes.c_int, # method
-    P_DOUBLE
+    ctypes.c_int, # n_simulations
+    P_DOUBLE, # k_obs
+    P_DOUBLE, # k_sim
 ]
 lib.fastnsa_compute_k_function.restype = None
 

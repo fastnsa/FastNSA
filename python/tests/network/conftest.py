@@ -1,6 +1,10 @@
 import pytest
 import networkx as nx
 from shapely.geometry import LineString
+import sys
+
+sys.path.insert(0, '/home/yeswin/project/fast-nsa/python')
+
 from fastnsa import Network
 
 @pytest.fixture

@@ -8,7 +8,7 @@ from fastnsa.bindings import capi
 
 
 # todo
-def k_function(
+def network_k_function(
     *,
     network: Network,
     points: PointEvents,
@@ -77,7 +77,7 @@ def k_function(
     n_points = points.n_points
 
     method_map = {
-        "NS": capi.FASTNSA_K_NS,
+        "NS": 6,
         "SPS": capi.FASTNSA_K_SPS,
         "STARS": capi.FASTNSA_K_STARS,
     }

@@ -6,3 +6,4 @@ def test_network_ir_structure(simple_grid_network):
     assert len(net._data_cache['offsets']) == 5
     # 检查总长度是否正确 (100 + 100)
     assert net.total_length == 200.0
+    

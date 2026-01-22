@@ -11,7 +11,6 @@ target_link_libraries(fastnsa_capi
     PRIVATE
         fastnsa_nne
         fastnsa_stars
-        GEOS::geos
         OpenMP::OpenMP_CXX
 )
 

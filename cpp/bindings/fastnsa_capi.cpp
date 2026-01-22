@@ -153,37 +153,47 @@ void* fastnsa_map_points(
         size_t wkb_len = network->wkb_offsets[e + 1] - network->wkb_offsets[e];
         geoms.emplace_back(reader.read(wkb_ptr, wkb_len));
 
+        cout << "Edge " << e << " WKB: " << geoms.back()->toString()<< endl; //test
+
         // 用 geom 做 point-line projection
         // geom 在作用域结束自动释放
     }
+
+    cout << "Building NNE index..." << endl; // test
+
     auto nne_index = NNE(std::move(geoms));
 
-    int method = 1; 
+    cout << "Building NNE index done" << endl; // test
+
+    int method = 0;  //single 
     double grid_size = 100.0;
     int num_threads = 4;
 
     // todo : 这里的 method, grid_size, num_threads 可以通过参数传入
     auto results = nne_index.query_nearest_mt(points, method, grid_size, num_threads); 
 
+    cout << "done querying, results size:" << results.size() << endl; // test
+
+
     pts->edge_ids.resize(n_points);
     pts->offsets.resize(n_points);
 
-    vector<geos::linearref::LengthIndexedLine> indexed_lines;
-    indexed_lines.reserve(geoms.size());
-    for (const auto& geom : geoms) {
-        indexed_lines.emplace_back(geom.get());
-    }
+    // vector<geos::linearref::LengthIndexedLine> indexed_lines;
+    // indexed_lines.reserve(geoms.size());
+    // for (const auto& geom : geoms) {
+    //     indexed_lines.emplace_back(geom.get());
+    // }
+
+    cout << "done build lines" << endl; // test
+
 
     for (size_t i = 0; i < n_points; ++i) {
         int edge_id = results[i];
-        if (edge_id < 0 || edge_id >= network->n_edges) {
-            continue;
-        }
-        
-        const auto& lil = indexed_lines[edge_id];
-        double offset = lil.project(geos::geom::Coordinate(xs[i], ys[i]));
+        cout << edge_id << endl; // test
 
-        offset = std::clamp(offset, 0.0, network->edge_len[edge_id]);
+        double offset = nne_index.project_point_onto_edge(edge_id, xs[i], ys[i]);
+
+        cout << "mapped offset: " << offset << endl; // test
 
         pts->edge_ids[i] = edge_id;
         pts->offsets[i] = offset;

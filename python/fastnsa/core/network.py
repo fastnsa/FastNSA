@@ -8,6 +8,7 @@ import osmnx as ox
 class Network: 
     def __init__(self, graph:nx.MultiGraph):
         self.crs = graph.graph.get("crs")
+        self.graph = graph  # 保持引用，防止被回收
         
         self.fix_direciton(graph)
     

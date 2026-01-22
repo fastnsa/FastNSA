@@ -30,6 +30,8 @@ explicit NNE(const std::string & path_to_geoms);
     vector<int> query_nearest_grid_enn(const vector<QueryPoint> &query_points, double grid_size); // default k = 200 //todo
     vector<int> query_nearest_grid(const vector<QueryPoint> &query_points, double grid_size);
 
+    double project_point_onto_edge(int edge_id, double x, double y);
+
 private:
     std::vector<std::unique_ptr<geos::geom::Geometry>> edges;
     MySTRtree rtree;
