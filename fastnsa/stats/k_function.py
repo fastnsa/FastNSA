@@ -20,6 +20,7 @@ def network_k_function(
     simulations: int = 0, 
     alpha: float = 0.05,
     return_simulations: bool = False,
+    epsilon: float = 0.1,
 ) -> KFunctionResult:
     """
     Compute the network K-function for a set of point events on a network.
@@ -44,6 +45,8 @@ def network_k_function(
         Significance level for Monte Carlo envelopes.
     return_simulations : bool, optional
         Whether to return all simulated K-functions.
+    epsilon : float, optional
+        Tolerance for approximate methods.
 
     Returns
     -------
@@ -77,11 +80,11 @@ def network_k_function(
     n_points = points.n_points
 
     method_map = {
-        "NS": 6,
+        "NS": capi.FASTNSA_K_NS,
         "SPS": capi.FASTNSA_K_SPS,
         "STARS": capi.FASTNSA_K_STARS,
     }
-    method_flag = method_map.get(method, 0)
+    method_flag = method_map.get(method, 6)
 
 
     k_obs = np.zeros(n_r, dtype=np.float64)
@@ -101,7 +104,8 @@ def network_k_function(
         method_flag,
         simulations,
         k_obs.ctypes.data_as(capi.P_DOUBLE),
-        k_sim.ctypes.data_as(capi.P_DOUBLE) if k_sim is not None else None
+        k_sim.ctypes.data_as(capi.P_DOUBLE) if k_sim is not None else None,
+        epsilon # tolerance for approximate methods
     )
 
     k_lo = k_hi = None

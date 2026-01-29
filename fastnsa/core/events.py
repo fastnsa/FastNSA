@@ -1,38 +1,58 @@
 from shapely.geometry import LineString
 import numpy as np
 from fastnsa.bindings import capi
+from typing import Literal, Optional
 
 class PointEvents:
-    def __init__(self, points_gdf, target_network):
+    def __init__(self, points_gdf, target_network, 
+                 mapping_method:Literal["R-tree", "comp_a", "comp_e"] = "R-tree",
+                 comp_eps: float = 10.0,
+                 n_threads: int = 1
+                 ):
         """
-        points_gdf: 包含几何点的 GeoDataFrame
-        target_network: 已经构建好的 Network 对象
+        points_gdf: GeoDataFrame with point geometries to be mapped
+        target_network: Network object representing the target network
+        mapping_method: Method to use for mapping points onto the network
+            "R-tree": Use R-tree based nearest edge search
+            "comp_a": Use Grid Compression approximate mapping method
+            "comp_e": Use Grid Compression exact mapping method 
+        comp_eps: Tolerance for approximate methods
+        n_threads: Number of threads to use for mapping
         """
-        self.network = target_network  # 保持引用，防止 Network 先被回收
+        self.network = target_network  # keep a reference to avoid premature GC
         self.n_points = len(points_gdf)
                 
-        # 确保点数据与路网 CRS 一致
+        # make sure CRS matches
         if points_gdf.crs != self.network.crs:
             points_gdf = points_gdf.to_crs(self.network.crs)
             
         x_ptr = np.ascontiguousarray(points_gdf.geometry.x.values, dtype=np.float64)
         y_ptr = np.ascontiguousarray(points_gdf.geometry.y.values, dtype=np.float64)
+        
+        method_map = {
+            "R-tree": capi.FASTNSA_PLNNS_RTREE,
+            "comp_a": capi.FASTNSA_PLNNS_COMP_APPROX,
+            "comp_e": capi.FASTNSA_PLNNS_COMP_EXACT,
+        }
+        method_flag = method_map.get(mapping_method, capi.FASTNSA_PLNNS_RTREE)
 
-        self._perform_cpp_mapping(x_ptr, y_ptr)
+        self._perform_cpp_mapping(x_ptr, y_ptr, method_flag, comp_eps,n_threads)
         
         
-
     def __del__(self):
         if hasattr(self, '_ptr') and self._ptr:
             capi.lib.fastnsa_pointset_destroy(self._ptr)
 
 
-    def _perform_cpp_mapping(self, x_ptr, y_ptr):
+    def _perform_cpp_mapping(self, x_ptr, y_ptr, method_flag, epsilon=10, n_threads=1):
         self._ptr = capi.lib.fastnsa_map_points(
             self.network._ptr, 
             x_ptr.ctypes.data_as(capi.P_DOUBLE),
             y_ptr.ctypes.data_as(capi.P_DOUBLE),
-            self.n_points
+            self.n_points,
+            method_flag,
+            epsilon,
+            n_threads
         )
 
 

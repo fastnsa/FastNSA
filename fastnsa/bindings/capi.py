@@ -2,10 +2,14 @@ from ._lib import lib
 import ctypes
 
 
-
+FASTNSA_K_RQS = 1
+FASTNSA_K_SPS = 2
 FASTNSA_K_NS = 6
-FASTNSA_K_SPS = 1
-FASTNSA_K_STARS = 2
+FASTNSA_K_STARS = 7
+
+FASTNSA_PLNNS_RTREE = 0
+FASTNSA_PLNNS_COMP_APPROX = 1
+FASTNSA_PLNNS_COMP_EXACT = 3
 
 P_DOUBLE = ctypes.POINTER(ctypes.c_double)
 P_INT = ctypes.POINTER(ctypes.c_int)
@@ -50,6 +54,9 @@ lib.fastnsa_map_points.argtypes = [
     P_DOUBLE,
     P_DOUBLE,  
     ctypes.c_int,  # n_points(int) - number of points to map
+    ctypes.c_int,  # method(int) - mapping method
+    ctypes.c_double, # comp_eps(double) - computation epsilon for approximate methods
+    ctypes.c_int   # n_threads(int) - number of threads to use
 ]
 lib.fastnsa_map_points.restype = VOID_P # 返回一个 PointSet 对象的指针
 
@@ -63,8 +70,9 @@ lib.fastnsa_compute_k_function.argtypes = [
     ctypes.c_int, # n_r
     ctypes.c_int, # method
     ctypes.c_int, # n_simulations
-    P_DOUBLE, # k_obs
-    P_DOUBLE, # k_sim
+    P_DOUBLE, # out k_obs
+    P_DOUBLE, # out k_sim
+    ctypes.c_double # tolerance for approximate methods
 ]
 lib.fastnsa_compute_k_function.restype = None
 
