@@ -4,7 +4,7 @@ from fastnsa.bindings import capi
 from shapely.geometry import LineString
 import osmnx as ox
 
-# TODO: Network class that wraps the C++ network object
+
 class Network: 
     def __init__(self, graph:nx.MultiGraph):
         self.crs = graph.graph.get("crs")
@@ -12,14 +12,12 @@ class Network:
         
         self.fix_direciton(graph)
     
-
         self.nodes_list = list(graph.nodes())
         self._node_to_idx = {node_id: i for i, node_id in enumerate(self.nodes_list)}
 
         ir_data = self._prepare_network_ir(graph)
         self._data_cache = ir_data
 
-        # TODO 需对接 graph geometry，构建 C++ 网络对象
         self._ptr = capi.lib.fastnsa_network_create(
             ir_data['edges'].ctypes.data_as(capi.P_DOUBLE),
             ir_data['n_edges'],
@@ -61,10 +59,7 @@ class Network:
             offsets.ctypes.data_as(capi.P_INT),
             len(offsets) - 1
         )
-        
-
-
-    # Fix edge direction based on node coordinates 
+    
     @staticmethod
     def fix_direciton(g:nx.MultiGraph):
         x_dic = {node_id: data['x'] for node_id, data in g.nodes(data=True)}
@@ -119,7 +114,7 @@ class Network:
         for eid, (u, v, k, data) in enumerate(graph.edges(keys=True, data=True)):
             # geom: LineString = data["geometry"]
             length = data["geometry"].length
-            # 转换为内部连续索引
+
             u_idx = self._node_to_idx[u]
             v_idx = self._node_to_idx[v]
             edge_list.append((u_idx, v_idx, length))
@@ -129,15 +124,14 @@ class Network:
         n_edges = len(edge_list)
         edges_arr = np.array(edge_list, dtype=np.float64) # [u_idx, v_idx, len]
 
-        # ---- 2. 构建 CSR 邻接表 (用于 C++ 快速寻路) ---- 
         n_nodes = len(self.nodes_list)
         adj = [[] for _ in range(n_nodes)]
         for eid, (u_idx, v_idx, _) in enumerate(edge_list):
             adj[int(u_idx)].append(eid)
-            adj[int(v_idx)].append(eid) # 无向图
+            adj[int(v_idx)].append(eid)
 
         offsets = np.zeros(n_nodes + 1, dtype=np.int32)
-        indices = np.zeros(n_edges * 2, dtype=np.int32) # 每条边存两次
+        indices = np.zeros(n_edges * 2, dtype=np.int32)
 
         curr = 0
         for i in range(n_nodes):

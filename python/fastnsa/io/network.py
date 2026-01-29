@@ -1,25 +1,6 @@
 
 import osmnx as ox
-
-
-# def load_network(
-#     source: str,
-#     *,
-#     source_type: str = "osm",
-#     directed: bool = False,
-# ) -> Network:
-#     """
-#     Load a spatial network.
-#     """
-#     # 参数检查
-#     if not isinstance(source, str):
-#         raise TypeError("source must be a string")
-
-#     if source_type not in {"osm", "graphml", "geopackage"}:
-#         raise ValueError(f"Unsupported source_type: {source_type}")
-
-#     # 占位：未来调用 C++ 核心
-#     raise NotImplementedError
+from shapely.geometry import LineString
 
 
 def build_osm_network(
