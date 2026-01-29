@@ -1,3 +1,0 @@
-[submodule "cpp/third_party/geos"]
-	path = cpp/third_party/geos
-	url = https://github.com/libgeos/geos.git
