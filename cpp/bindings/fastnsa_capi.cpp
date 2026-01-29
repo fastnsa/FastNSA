@@ -61,12 +61,13 @@ void* fastnsa_network_create(double* edges, int n_edges, int* offsets, int* indi
     // offsets: size n_nodes + 1
     // indices: size offsets[n_nodes]
 
-    net->csr_offsets.assign(offsets, offsets + n_nodes + 1);
+    if (offsets != nullptr && indices != nullptr) {
+        net->csr_offsets.assign(offsets, offsets + n_nodes + 1);
 
-    int nnz = offsets[n_nodes];
-    net->csr_indices.assign(indices, indices + nnz);
+        int nnz = offsets[n_nodes];
+        net->csr_indices.assign(indices, indices + nnz);
+    }
 
-    // return ;
 
     return net;
 }
@@ -152,18 +153,11 @@ void* fastnsa_map_points(
         const uint8_t* wkb_ptr = network->wkb_data.data() + network->wkb_offsets[e];
         size_t wkb_len = network->wkb_offsets[e + 1] - network->wkb_offsets[e];
         geoms.emplace_back(reader.read(wkb_ptr, wkb_len));
-
-        cout << "Edge " << e << " WKB: " << geoms.back()->toString()<< endl; //test
-
         // 用 geom 做 point-line projection
         // geom 在作用域结束自动释放
     }
 
-    cout << "Building NNE index..." << endl; // test
-
     auto nne_index = NNE(std::move(geoms));
-
-    cout << "Building NNE index done" << endl; // test
 
     int method = 0;  //single 
     double grid_size = 100.0;
@@ -171,9 +165,6 @@ void* fastnsa_map_points(
 
     // todo : 这里的 method, grid_size, num_threads 可以通过参数传入
     auto results = nne_index.query_nearest_mt(points, method, grid_size, num_threads); 
-
-    cout << "done querying, results size:" << results.size() << endl; // test
-
 
     pts->edge_ids.resize(n_points);
     pts->offsets.resize(n_points);
@@ -184,16 +175,10 @@ void* fastnsa_map_points(
     //     indexed_lines.emplace_back(geom.get());
     // }
 
-    cout << "done build lines" << endl; // test
-
-
     for (size_t i = 0; i < n_points; ++i) {
         int edge_id = results[i];
-        cout << edge_id << endl; // test
 
         double offset = nne_index.project_point_onto_edge(edge_id, xs[i], ys[i]);
-
-        cout << "mapped offset: " << offset << endl; // test
 
         pts->edge_ids[i] = edge_id;
         pts->offsets[i] = offset;

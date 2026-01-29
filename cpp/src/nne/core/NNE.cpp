@@ -146,26 +146,39 @@ void NNE::process_grid_center(
     }
 }
 
+vector<QueryPoint> NNE::transfrom_coords_to_querypoints(double *xs, double *ys, int n_points)
+{
+    std::vector<QueryPoint> points;
+    points.reserve(n_points);
 
+    for (size_t i = 0; i < n_points; ++i) {
+        points.push_back(QueryPoint{
+            xs[i],
+            ys[i]
+        });
+    }
+
+    return points;
+}
 
 // test: query_nearest_mt
  vector<int> NNE::query_nearest_mt(const vector<QueryPoint> &query_points,
      const int method, const double grid_size, const int num_threads) {
         if(method == 0) return query_nearest0_mt(query_points);
 
-        cerr << "  LOG: start querying " << std::endl;
+        // cerr << "  LOG: start querying " << std::endl;
 
-        auto t_start = std::chrono::high_resolution_clock::now();
+        // auto t_start = std::chrono::high_resolution_clock::now();
 
         auto grid = SpatialGrid(grid_size);
         build_grid_mt(grid,query_points);
 
-        auto t_end = std::chrono::high_resolution_clock::now();
-        auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
-        std::cout << "build grid elapsed: " << elapsed_ms << " ms" << std::endl;
+        // auto t_end = std::chrono::high_resolution_clock::now();
+        // auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
+        // std::cout << "build grid elapsed: " << elapsed_ms << " ms" << std::endl;
 
-        cerr << "points num:" << grid.getPointsNum()<<endl;
-        cerr << "grid num:" << grid.getGridNums()<<endl;
+        // cerr << "points num:" << grid.getPointsNum()<<endl;
+        // cerr << "grid num:" << grid.getGridNums()<<endl;
 
         auto centers  = grid.getAllGridCenters();
 
@@ -174,7 +187,7 @@ void NNE::process_grid_center(
 
         int max_k = 100;
 
-        cout << "start processing  centers size():" << centers.size() <<endl;
+        // cout << "start processing  centers size():" << centers.size() <<endl;
 
         #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
         for (int i = 0; i < centers.size(); ++i) {
@@ -193,19 +206,19 @@ void NNE::process_grid_center(
 
     if(method == 0) return query_nearest0(query_points);
 
-    cerr << "  LOG: start querying " << std::endl;
+    // cerr << "  LOG: start querying " << std::endl;
 
-    auto t_start = std::chrono::high_resolution_clock::now();
+    // auto t_start = std::chrono::high_resolution_clock::now();
 
     auto grid = SpatialGrid(grid_size);
     build_grid(grid,query_points);
 
-    auto t_end = std::chrono::high_resolution_clock::now();
-    auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
-    std::cout << "build grid elapsed: " << elapsed_ms << " ms" << std::endl;
+    // auto t_end = std::chrono::high_resolution_clock::now();
+    // auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
+    // std::cout << "build grid elapsed: " << elapsed_ms << " ms" << std::endl;
 
-    cerr << "points num:" << grid.getPointsNum()<<endl;
-    cerr << "grid num:" << grid.getGridNums()<<endl;
+    // cerr << "points num:" << grid.getPointsNum()<<endl;
+    // cerr << "grid num:" << grid.getGridNums()<<endl;
 
     auto query_centers = grid.getAllGridCenters();
 

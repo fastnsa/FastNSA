@@ -102,6 +102,9 @@ void kfun_init_parameters(
     for (int t = 0; t < m.D; ++t)
         m.tau_vec[t] = r_values[t];
 
+    // m.incr_tau = m.tau_vec[1] - m.tau_vec[0];  //testing
+    // m.start_tau = m.tau_vec[0];
+
     m.L = simulations + 1;   // 第 0 次是真实点集
 
     m.multiple_K_values = new double*[m.L];

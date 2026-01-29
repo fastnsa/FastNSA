@@ -32,6 +32,7 @@ explicit NNE(const std::string & path_to_geoms);
 
     double project_point_onto_edge(int edge_id, double x, double y);
 
+
 private:
     std::vector<std::unique_ptr<geos::geom::Geometry>> edges;
     MySTRtree rtree;
@@ -44,6 +45,8 @@ private:
 
     std::vector<std::unique_ptr<geos::geom::Geometry>> read_geoms_wkt(const char *filename);
     void process_grid_center(const QueryPoint& query_point, int method,int max_k,SpatialGrid& grid,vector<int>& results);// todo
+
+    static vector<QueryPoint> transfrom_coords_to_querypoints(double *xs, double *ys, int n_points); 
 };
 
 

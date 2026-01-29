@@ -37,8 +37,99 @@ std::vector<uint8_t> create_linestring_wkb(double x1, double y1, double x2, doub
 }
 
 
-int main() {
-    std::cout << "=== 开始 FastNSA C-API 测试 ===" << std::endl;
+int k_function_test(){
+
+    int n_nodes = 10;
+    int n_edges = 12;
+
+    std::vector<int> edge_u = {0, 1, 0, 0, 1, 2, 3, 2, 4, 6, 6, 6};
+
+    std::vector<int>  edge_v= {1, 2, 2, 6, 3, 3, 5, 4, 5, 7, 8, 9};
+
+    std::vector<double> edge_len = {12, 13, 14, 6, 9, 7, 7, 7, 7, 2, 3, 4};
+
+    std::vector<int>  edge_ids = {
+        1, 1,
+        2, 2,
+        4, 4, 4, 4,
+        5, 5, 5, 5, 5,
+        6, 6, 6, 6, 6,
+        11, 11, 11
+    };
+
+    std::vector<double> offsets = {
+        4, 6,
+        3, 9,
+        1, 2, 5, 7,
+        2, 3, 4, 5, 6,
+        1, 2, 3, 5, 6,
+        1, 2, 3
+    };
+    // -------------------------------------------------
+
+    std::vector<double> edges_data(n_edges * 3);
+    for(int i=0;i<n_edges;i++){
+        edges_data[i*3 + 0] = edge_u[i];
+        edges_data[i*3 + 1] = edge_v[i];    
+        edges_data[i*3 + 2] = edge_len[i];
+    }
+
+    std::cout << "[Step 1] 创建网络..." << std::endl;
+    void* net = fastnsa_network_create(edges_data.data(), n_edges, nullptr, nullptr, n_nodes);
+    assert(net != nullptr);
+
+
+    // ---------------------------------------
+
+    std::cout << "[Step 2] 手动设置点集测试..." << std::endl;
+    void* ps_ptr = fastnsa_pointset_create(net);
+    
+    int set_res = fastnsa_pointset_set(ps_ptr, edge_ids.data(), offsets.data(), edge_ids.size());
+    if(set_res == 0) std::cout << "  -> 设置成功" << std::endl;
+    else std::cout << "  -> 设置失败 Code: " << set_res << std::endl;
+    assert(set_res == 0);
+
+    std::cout << "[Step 3] 计算 K 函数..." << std::endl;
+    std::vector<double> r_values = {2.0, 4.0, 6.0, 8.0, 10.0};
+    int n_r = r_values.size();
+    std::vector<double> out_k(n_r);
+
+    int n_simulations = 4;
+    std::vector<double> sim_k(n_simulations * n_r);
+    
+    // 使用自动映射的点集 pts 进行计算
+    fastnsa_compute_k_function(
+        net, 
+        ps_ptr, 
+        r_values.data(), 
+        n_r, 
+        FASTNSA_K_NS, 
+        n_simulations, // No simulations
+        out_k.data(), 
+        sim_k.data()
+    );
+
+
+    std::cout << "  -> K Values: ";
+    for (double v : out_k) std::cout << std::fixed << std::setprecision(4) << v << " ";
+    std::cout << std::endl;
+
+    
+    std::cout << "  -> K Simulations: " << std::endl;
+    for(int l=0;l<n_simulations;l++){
+        std::cout << "     Sim " << l+1 << ": ";
+        for (int t = 0; t < n_r; ++t) {
+            std::cout << std::fixed << std::setprecision(4) << sim_k[l * n_r + t] << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    fastnsa_pointset_destroy(ps_ptr);
+    fastnsa_network_destroy(net);
+}
+
+void default_test(){
+std::cout << "=== 开始 FastNSA C-API 测试 ===" << std::endl;
 
     // -------------------------------------------------
     // 1. 准备拓扑数据
@@ -130,7 +221,7 @@ int main() {
     // 5. 计算 K 函数
     // -------------------------------------------------
     std::cout << "[Step 5] 计算 K 函数..." << std::endl;
-    std::vector<double> r_values = {1.0, 2.0, 5.0, 10.0};
+    std::vector<double> r_values = {1.0, 2.0, 5.0, 10.0, 15.0};
     int n_r = r_values.size();
     std::vector<double> out_k(n_r);
     
@@ -159,6 +250,14 @@ int main() {
     fastnsa_network_destroy(net);
 
     std::cout << "=== 测试完成 ===" << std::endl;
+}
+
+int main() {
+    // k_function_test();
+    default_test();
+
     return 0;
+
+    
 }
 

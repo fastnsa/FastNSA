@@ -25,8 +25,8 @@ class PointEvents:
         y_ptr = np.ascontiguousarray(points_gdf.geometry.y.values, dtype=np.float64)
 
         # 3. 调用 C++ 执行 Mapping (假设 C++ 侧实现了空间索引加速)
-        # self._perform_cpp_mapping(x_ptr, y_ptr)
-        self._perform_python_mapping_fallback(points_gdf)
+        self._perform_cpp_mapping(x_ptr, y_ptr)
+        # self._perform_python_mapping_fallback(points_gdf)
         
         
         
