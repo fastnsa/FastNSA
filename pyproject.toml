@@ -6,9 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "fastnsa"
 version = "0.1.0"
 requires-python = ">=3.9"
-description = "Fast Network Spatial Analysis"
+description = "High-performance network-constrained spatial point pattern analysis in Python"
+readme = "README.md"
 
-license = { text = "LGPL-3.0-only" }
+license = { text = "LGPL-2.1-only" }
 
 authors = [
     { name = "FastNSA Project" }
@@ -19,6 +20,16 @@ dependencies = [
     "geopandas",
     "osmnx",
     "shapely"
+]
+
+keywords = ["GIS", "spatial", "network", "point-pattern", "K-function"]
+
+classifiers = [
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: C++",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Scientific/Engineering :: Mathematics"
 ]
 
 [tool.setuptools.packages.find]
