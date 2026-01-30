@@ -2,6 +2,7 @@ import numpy as np
 import networkx as nx
 from fastnsa.bindings import capi
 from shapely.geometry import LineString
+import geopandas as gpd
 import osmnx as ox
 
 
@@ -59,6 +60,16 @@ class Network:
             offsets.ctypes.data_as(capi.P_INT),
             len(offsets) - 1
         )
+        
+    def save_graph_gpkg(self, filename):
+        
+        edges_gdf = ox.graph_to_gdfs(self.graph, nodes=False)
+        edges_gdf_simplify = gpd.GeoDataFrame(geometry=edges_gdf.geometry,
+                                              crs=edges_gdf.crs)
+
+        edges_gdf_simplify.to_file(filename, driver='GPKG',
+                                   layer='edges')
+        
     
     @staticmethod
     def fix_direciton(g:nx.MultiGraph):
@@ -76,7 +87,6 @@ class Network:
     @classmethod
     def from_osm(cls, bbox=None, place=None, network_type="drive", 
                  crs=None, consolidate_tolerance=20):
-        import osmnx as ox
         
         if place:
             g = ox.graph_from_place(place, simplify=True, network_type=network_type)

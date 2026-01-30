@@ -1,7 +1,9 @@
+import ctypes
 from shapely.geometry import LineString
 import numpy as np
 from fastnsa.bindings import capi
 from typing import Literal, Optional
+import os
 
 class PointEvents:
     def __init__(self, points_gdf, target_network, 
@@ -42,16 +44,21 @@ class PointEvents:
     def __del__(self):
         if hasattr(self, '_ptr') and self._ptr:
             capi.lib.fastnsa_pointset_destroy(self._ptr)
+            
+    def dump_to_file(self, filename):
+        path = os.fspath(filename)
+        c_path = ctypes.c_char_p(filename.encode("utf-8"))        
+        capi.lib.fastnsa_pointset_dump_text(self._ptr, c_path)
 
 
-    def _perform_cpp_mapping(self, x_ptr, y_ptr, method_flag, epsilon=10, n_threads=1):
+    def _perform_cpp_mapping(self, x_ptr, y_ptr, method_flag, comp_eps=10, n_threads=1):
         self._ptr = capi.lib.fastnsa_map_points(
             self.network._ptr, 
             x_ptr.ctypes.data_as(capi.P_DOUBLE),
             y_ptr.ctypes.data_as(capi.P_DOUBLE),
             self.n_points,
             method_flag,
-            epsilon,
+            comp_eps,
             n_threads
         )
 

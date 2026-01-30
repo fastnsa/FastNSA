@@ -60,6 +60,9 @@ lib.fastnsa_map_points.argtypes = [
 ]
 lib.fastnsa_map_points.restype = VOID_P # 返回一个 PointSet 对象的指针
 
+lib.fastnsa_pointset_dump_text.restype = ctypes.c_int # 状态码：0成功， -1 空指针， -2文件打开失败
+lib.fastnsa_pointset_dump_text.argtypes = [VOID_P, ctypes.c_char_p] # void point_set_ptr， const char* filenme
+
 
 
 # 参数：net_ptr, event_ptr, r_values, n_r, k_obs,k_sim
