@@ -4,6 +4,9 @@ import ctypes
 
 FASTNSA_K_RQS = 1
 FASTNSA_K_SPS = 2
+FASTNSA_K_EAR = 3
+FASTNSA_K_MTS = 4
+FASTNSA_K_EARTH = 5
 FASTNSA_K_NS = 6
 FASTNSA_K_STARS = 7
 
@@ -47,6 +50,8 @@ lib.fastnsa_pointset_destroy.restype = None
 # 参数：points_ptr(void*), edge_ids(int*), offsets(double*), n_points(int)
 lib.fastnsa_pointset_set.argtypes = [VOID_P, P_INT, P_DOUBLE, ctypes.c_int]
 lib.fastnsa_pointset_set.restype = ctypes.c_int # 返回状态码
+lib.fastnsa_pointset_set_st.argtypes = [VOID_P, P_INT, P_DOUBLE, P_DOUBLE, ctypes.c_int]
+lib.fastnsa_pointset_set_st.restype = ctypes.c_int
 
 
 lib.fastnsa_map_points.argtypes = [
@@ -79,5 +84,18 @@ lib.fastnsa_compute_k_function.argtypes = [
 ]
 lib.fastnsa_compute_k_function.restype = None
 
+lib.fastnsa_compute_k_function_earth.argtypes = [
+    VOID_P,   # network_ptr
+    VOID_P,   # point_set_ptr
+    P_DOUBLE, # s_values
+    ctypes.c_int, # n_s
+    P_DOUBLE, # t_values
+    ctypes.c_int, # n_t
+    ctypes.c_int, # method
+    ctypes.c_int, # n_simulations
+    P_DOUBLE, # out k_obs
+    P_DOUBLE, # out k_sim
+]
+lib.fastnsa_compute_k_function_earth.restype = None
 
 
