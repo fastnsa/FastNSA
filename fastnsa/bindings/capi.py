@@ -52,6 +52,8 @@ lib.fastnsa_pointset_set.argtypes = [VOID_P, P_INT, P_DOUBLE, ctypes.c_int]
 lib.fastnsa_pointset_set.restype = ctypes.c_int # 返回状态码
 lib.fastnsa_pointset_set_st.argtypes = [VOID_P, P_INT, P_DOUBLE, P_DOUBLE, ctypes.c_int]
 lib.fastnsa_pointset_set_st.restype = ctypes.c_int
+lib.fastnsa_pointset_set_times.argtypes = [VOID_P, P_DOUBLE, ctypes.c_int]
+lib.fastnsa_pointset_set_times.restype = ctypes.c_int
 
 
 lib.fastnsa_map_points.argtypes = [
@@ -84,7 +86,7 @@ lib.fastnsa_compute_k_function.argtypes = [
 ]
 lib.fastnsa_compute_k_function.restype = None
 
-lib.fastnsa_compute_k_function_earth.argtypes = [
+lib.fastnsa_compute_spatiotemporal_k_function.argtypes = [
     VOID_P,   # network_ptr
     VOID_P,   # point_set_ptr
     P_DOUBLE, # s_values
@@ -96,6 +98,4 @@ lib.fastnsa_compute_k_function_earth.argtypes = [
     P_DOUBLE, # out k_obs
     P_DOUBLE, # out k_sim
 ]
-lib.fastnsa_compute_k_function_earth.restype = None
-
-
+lib.fastnsa_compute_spatiotemporal_k_function.restype = None

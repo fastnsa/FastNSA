@@ -9,7 +9,9 @@ class PointEvents:
     def __init__(self, points_gdf, target_network, 
                  mapping_method:Literal["R-tree", "comp_a", "comp_e"] = "R-tree",
                  comp_eps: float = 10.0,
-                 n_threads: int = 1
+                 n_threads: int = 1,
+                 time_col: Optional[str] = None,
+                 times: Optional[np.ndarray] = None
                  ):
         """
         points_gdf: GeoDataFrame with point geometries to be mapped
@@ -39,6 +41,7 @@ class PointEvents:
         method_flag = method_map.get(mapping_method, capi.FASTNSA_PLNNS_RTREE)
 
         self._perform_cpp_mapping(x_ptr, y_ptr, method_flag, comp_eps,n_threads)
+        self._update_times(time_col=time_col, times=times, points_gdf=points_gdf)
         
         
     def __del__(self):
@@ -95,6 +98,26 @@ class PointEvents:
                 offsets.ctypes.data_as(capi.P_DOUBLE),
                 len(edge_ids)
             )
-        
 
+    def _update_times(self, time_col: Optional[str], times: Optional[np.ndarray], points_gdf):
+        if times is not None:
+            time_arr = np.ascontiguousarray(times, dtype=np.float64)
+        elif time_col is not None:
+            if time_col not in points_gdf.columns:
+                raise ValueError(f"`time_col` {time_col!r} not found in points data.")
+            time_arr = np.ascontiguousarray(points_gdf[time_col].to_numpy(), dtype=np.float64)
+        else:
+            return
+
+        if time_arr.ndim != 1 or len(time_arr) != self.n_points:
+            raise ValueError("`times` must be a 1D array with length equal to number of points.")
+
+        ret = capi.lib.fastnsa_pointset_set_times(
+            self._ptr,
+            time_arr.ctypes.data_as(capi.P_DOUBLE),
+            self.n_points
+        )
+        if ret != 0:
+            raise RuntimeError(f"fastnsa_pointset_set_times failed with code {ret}.")
+        
 

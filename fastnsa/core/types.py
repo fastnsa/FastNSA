@@ -79,4 +79,25 @@ class KFunctionResult:
                 f"{key!r} is not a valid KFunctionResult field"
             )
         return getattr(self, key)
+
+
+@dataclass
+class SpatiotemporalKFunctionResult:
+    s: np.ndarray
+    t: np.ndarray
+    k_obs: np.ndarray
+    k_lo: Optional[np.ndarray] = None
+    k_hi: Optional[np.ndarray] = None
+    k_sim: Optional[np.ndarray] = None
+    method: Optional[str] = None
+    n_points: Optional[int] = None
+    intensity: Optional[float] = None
+    network_length: Optional[float] = None
+
+    def __getitem__(self, key):
+        if key not in self.__dataclass_fields__:
+            raise KeyError(
+                f"{key!r} is not a valid SpatiotemporalKFunctionResult field"
+            )
+        return getattr(self, key)
     
