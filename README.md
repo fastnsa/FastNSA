@@ -1,68 +1,31 @@
 # FastNSA
 
-FastNSA is a high-performance toolkit for **network-constrained spatial analysis**,
-designed for large-scale road networks and massive point datasets.
-It provides a Python interface backed by a native implementation for efficient
-spatial indexing and network-based statistical computation.
+Native-accelerated network spatial analysis for Python. This repository owns
+the Python package, C++ core, C ABI, and platform wheels. QGIS plugin sources
+are maintained in a separate repository.
 
+- [Python package and quick start](python/README.md)
+- [User documentation](python/docs/index.md)
+- [Algorithm references](python/docs/references.md)
+- [License](LICENSE)
 
+## Build and Test
 
----
-
-## Installation
-
-FastNSA is distributed via PyPI with prebuilt native backends.
+Python 3.11 or newer, CMake 3.18 or newer, and a C++17 compiler are required
+for a source build. Compatible wheels include the native library.
 
 ```bash
-pip install fastnsa
-```
-Supported platforms:
-
-* Linux (x86_64)
-
-* Python ≥ 3.9
-
-## Quick Example
-
-```python
-import fastnsa as nsa
-
-# 1. Build a road network from OpenStreetMap
-# (internally constructs spatial and network indexes)
-net = nsa.Network.from_osm(place="Central Park, NY")
-
-# 2. Load event points and project them onto the network
-gdf = nsa.load_points("accidents.csv")
-events = nsa.PointEvents(gdf, target_network=net)
-
-# 3. Compute a network-based K-function
-results = nsa.network_k_function(
-    network=net,
-    points=events,
-    r_values=[10, 50, 100]
-)
-
-print(results)
+python -m pip install .
+python -m fastnsa._selftest
+python -m unittest discover -s tests/python -t . -v
+cmake -S cpp -B build/native -DCMAKE_BUILD_TYPE=Release -DFASTNSA_BUILD_TESTS=ON
+cmake --build build/native --config Release --parallel 2
+ctest --test-dir build/native -C Release --output-on-failure
 ```
 
-##  Design Overview
+Network-dependent integration tests are opt-in; see their module docstrings.
+The native/wheel matrix covers Linux x86_64, Windows AMD64, and macOS Intel
+and Apple Silicon. CI success does not certify every external host environment.
 
-The Python layer provides:
-
-* Network construction and I/O
-
-* Event projection to networks
-
-* tatistical analysis interfaces
-
-Performance-critical components such as spatial indexing,
-point-to-network mapping, and distance evaluation are implemented
-in a native backend and exposed through Python bindings.
-
-
-## License
-
-FastNSA is licensed under the GNU Lesser General Public License v3.0 (LGPL-2.1).
-
-You are free to use this library in proprietary and open-source software,
-but any modifications to the FastNSA library itself must be released under LGPL.
+`EXPORT_PROVENANCE.json` records the upstream snapshot and exported file hashes.
+It is a provenance record, not a public release approval or a secret audit.

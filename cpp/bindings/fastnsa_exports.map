@@ -1,0 +1,6 @@
+{
+    global:
+        fastnsa_*;
+    local:
+        *;
+};

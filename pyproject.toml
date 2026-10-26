@@ -1,48 +1,94 @@
 [build-system]
-requires = ["setuptools>=64", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["scikit-build-core>=0.10"]
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "fastnsa"
-version = "0.1.0"
-requires-python = ">=3.9"
+version = "0.2.0"
+requires-python = ">=3.11"
 description = "High-performance network-constrained spatial point pattern analysis in Python"
-readme = "README.md"
-
-license = { text = "LGPL-2.1-only" }
-
+readme = "python/README.md"
+license = "LGPL-2.1-only"
+license-files = ["python/LICENSE"]
 authors = [
     { name = "FastNSA Project" }
 ]
 dependencies = [
-    "numpy",
-    "pandas",
-    "geopandas",
-    "osmnx",
-    "shapely"
+    "numpy>=1.23.5"
 ]
-
 keywords = ["GIS", "spatial", "network", "point-pattern", "K-function"]
-
 classifiers = [
-    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Development Status :: 4 - Beta",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: C++",
     "Topic :: Scientific/Engineering :: GIS",
     "Topic :: Scientific/Engineering :: Mathematics"
 ]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["fastnsa*"]
+[project.urls]
+Homepage = "https://github.com/fastnsa/FastNSA"
+Repository = "https://github.com/fastnsa/FastNSA"
+Issues = "https://github.com/fastnsa/FastNSA/issues"
+Documentation = "https://github.com/fastnsa/FastNSA/tree/main/python/docs"
 
-[tool.setuptools]
-include-package-data = true
+[project.optional-dependencies]
+dataframe = ["pandas"]
+xarray = ["xarray"]
+geo = ["pandas", "geopandas", "shapely"]
+osm = ["pandas", "geopandas", "shapely", "networkx", "osmnx"]
+viz = ["matplotlib"]
+all = ["pandas", "geopandas", "shapely", "networkx", "osmnx", "matplotlib", "xarray"]
 
-[tool.setuptools.package-data]
-fastnsa = [
-    "bindings/*.so",
-    "bindings/*.pyd",
-    "bindings/*.dll",
-    "bindings/*.dylib"
+[tool.scikit-build]
+cmake.source-dir = "cpp"
+cmake.build-type = "Release"
+cmake.args = [
+    "-DFASTNSA_BUILD_TESTS=OFF",
+    "-DFASTNSA_INSTALL_LIBDIR=fastnsa/bindings",
 ]
+wheel.packages = ["python/fastnsa"]
+wheel.py-api = "py3"
+wheel.exclude = ["include/**"]
+sdist.include = [
+    "cpp/CMakeLists.txt",
+    "cpp/bindings/**",
+    "cpp/include/**",
+    "cpp/src/**",
+    "python/fastnsa/**",
+    "python/LICENSE",
+    "python/README.md",
+    "python/docs/**",
+]
+sdist.exclude = [
+    "cpp/build*/**",
+    "docs/**",
+    "qgis/**",
+    "tests/**",
+    "**/__pycache__/**",
+    "python/fastnsa/bindings/libfastnsa.*",
+    "python/fastnsa/bindings/fastnsa.dll",
+]
+
+[tool.cibuildwheel]
+build = "cp311-* cp312-*"
+skip = "*-musllinux_*"
+test-requires = ["numpy"]
+test-command = "python -m fastnsa._selftest && python -m unittest discover -s \"{project}/tests/python\" -p \"test_*.py\" -v"
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64"]
+manylinux-x86_64-image = "manylinux2014"
+# Newer NumPy releases may target a newer GLIBC than this container. Let pip
+# select a compatible binary release instead of attempting a NumPy source build.
+environment = { PIP_ONLY_BINARY = "numpy" }
+
+[tool.cibuildwheel.windows]
+archs = ["AMD64"]
+
+[tool.cibuildwheel.macos]
+archs = ["x86_64", "arm64"]

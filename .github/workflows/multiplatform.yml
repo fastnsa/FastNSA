@@ -1,0 +1,241 @@
+name: Native and wheel matrix
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - "release/**"
+      - "refactor/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+  native:
+    name: Native ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux GCC
+            os: ubuntu-22.04
+            cc: gcc
+            cxx: g++
+          - name: Linux Clang
+            os: ubuntu-22.04
+            cc: clang
+            cxx: clang++
+          - name: Windows AMD64
+            os: windows-latest
+          - name: macOS Intel
+            os: macos-15-intel
+          - name: macOS Apple Silicon
+            os: macos-15
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        shell: bash
+        run: |
+          cmake --version
+          uname -a || true
+
+      - name: Configure
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+        run: >-
+          cmake -S cpp -B build/native
+          -DFASTNSA_BUILD_TESTS=ON
+          -DFASTNSA_ENABLE_IPO=ON
+          -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build/native --config Release --parallel 2
+
+      - name: Run CTest
+        run: ctest --test-dir build/native -C Release --output-on-failure
+
+      - name: Upload native test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fastnsa-native-logs-${{ matrix.name }}
+          path: build/native/Testing/Temporary/
+          if-no-files-found: ignore
+
+      - name: Inspect Linux native dependencies
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          readelf -d build/native/bindings/libfastnsa.so
+          ldd build/native/bindings/libfastnsa.so
+          if readelf -d build/native/bindings/libfastnsa.so | grep -Ei 'NEEDED.*lib(geos|gomp|omp|iomp)'; then
+            echo 'Unexpected GEOS or OpenMP dependency in libfastnsa'
+            exit 1
+          fi
+
+  wheel:
+    name: Wheel ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux x86_64
+            os: ubuntu-22.04
+            arch: x86_64
+          - name: Windows AMD64
+            os: windows-latest
+            arch: AMD64
+          - name: macOS Intel
+            os: macos-15-intel
+            arch: x86_64
+          - name: macOS Apple Silicon
+            os: macos-15
+            arch: arm64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install wheel builder
+        run: python -m pip install "cibuildwheel>=2.22,<4"
+
+      - name: Build and test wheel
+        run: python -m cibuildwheel --output-dir wheelhouse
+        env:
+          CIBW_ARCHS: ${{ matrix.arch }}
+
+      - name: Audit Linux wheel
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          python -m pip install auditwheel
+          mkdir -p audit-reports
+          auditwheel show wheelhouse/*.whl | tee audit-reports/auditwheel.txt
+          python tools/ci/check_linux_wheel.py wheelhouse/*.whl | tee audit-reports/native-dependencies.txt
+
+      - name: Upload Linux dependency reports
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: fastnsa-linux-dependency-reports
+          path: audit-reports/*.txt
+          if-no-files-found: error
+
+      - name: Upload wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: fastnsa-wheel-${{ runner.os }}-${{ matrix.arch }}
+          path: wheelhouse/*.whl
+          if-no-files-found: error
+
+  installed-wheel:
+    name: NumPy 1.26.4 / Python ${{ matrix.python }} / ${{ matrix.target.name }}
+    needs: wheel
+    if: ${{ !cancelled() }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12"]
+        target:
+          - name: Linux x86_64
+            os: ubuntu-22.04
+            artifact: fastnsa-wheel-Linux-x86_64
+          - name: Windows AMD64
+            os: windows-latest
+            artifact: fastnsa-wheel-Windows-AMD64
+          - name: macOS Intel
+            os: macos-15-intel
+            artifact: fastnsa-wheel-macOS-x86_64
+          - name: macOS Apple Silicon
+            os: macos-15
+            artifact: fastnsa-wheel-macOS-arm64
+    runs-on: ${{ matrix.target.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.target.artifact }}
+          path: wheelhouse
+
+      - name: Install wheel with baseline NumPy
+        shell: bash
+        run: |
+          python -m pip install --only-binary=numpy "numpy==1.26.4" wheelhouse/*.whl
+          python -m pip check
+
+      - name: Verify installed runtime
+        working-directory: ${{ runner.temp }}
+        run: >-
+          python -c "import sys, fastnsa, numpy;
+          from pathlib import Path;
+          print('Python:', sys.version);
+          print('NumPy:', numpy.__version__);
+          print('FastNSA:', fastnsa.__file__);
+          assert numpy.__version__ == '1.26.4';
+          assert 'site-packages' in Path(fastnsa.__file__).parts"
+
+      - name: Run runtime self-test
+        working-directory: ${{ runner.temp }}
+        run: python -m fastnsa._selftest
+
+      - name: Run Python package suite
+        working-directory: ${{ runner.temp }}
+        run: >-
+          python -m unittest discover
+          -s "${{ github.workspace }}/tests/python" -p "test_*.py" -v
+
+  linux-geo:
+    name: Linux installed wheel with geo dependencies
+    needs: wheel
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: fastnsa-wheel-Linux-x86_64
+          path: wheelhouse
+
+      - name: Install wheel and optional dependencies
+        shell: bash
+        run: |
+          python -m pip install wheelhouse/*.whl geopandas networkx shapely pandas
+          python -m pip check
+
+      - name: Verify installed package and dependencies
+        working-directory: ${{ runner.temp }}
+        run: >-
+          python -c "import fastnsa, geopandas, networkx, shapely;
+          from pathlib import Path;
+          print('Installed FastNSA:', fastnsa.__file__);
+          assert 'site-packages' in Path(fastnsa.__file__).parts"
+
+      - name: Run Python package suite
+        working-directory: ${{ runner.temp }}
+        run: >-
+          python -m unittest discover
+          -s "${{ github.workspace }}/tests/python" -p "test_*.py" -v

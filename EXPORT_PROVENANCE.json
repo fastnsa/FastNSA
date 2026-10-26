@@ -1,0 +1,695 @@
+{
+  "exporter_sha256": "7bc41121a9ab103937bdedc6f0a8789ce88a79c3bdca8f9c5cd96329ebb726ef",
+  "files": [
+    {
+      "mode": "100644",
+      "path": ".github/workflows/multiplatform.yml",
+      "sha256": "8421165497d680302ec1fab43941b1080e2d18015d06301c9e54f5778c050dbe",
+      "source": "generated:filtered-native-workflow"
+    },
+    {
+      "mode": "100644",
+      "path": ".gitignore",
+      "sha256": "8d2a436176c6d202532549dd1256afb7f26afbd9504b7eeb20031d6408a0cd37",
+      "source": ".gitignore"
+    },
+    {
+      "mode": "100644",
+      "path": "LICENSE",
+      "sha256": "5fb011fc155156fb64214e15a5b614cc1b6f12a535fb14d2bfb61eb7b9d5afff",
+      "source": "python/LICENSE"
+    },
+    {
+      "mode": "100644",
+      "path": "README.md",
+      "sha256": "e678448473da8d5b751949521565a58c32b38b32f1fdf8571ff55c0fc7ea3d78",
+      "source": "template:python-README.md"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/CMakeLists.txt",
+      "sha256": "73284f16a04c09a91f54d48619f79bdccab3542d8b2cf826aba7adffc7b8a348",
+      "source": "cpp/CMakeLists.txt"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/bindings/CMakeLists.txt",
+      "sha256": "b80713c86e2364e1c7175b268ea7cc6f928fc7bb9ebc0fde0061b16f9755a672",
+      "source": "cpp/bindings/CMakeLists.txt"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/bindings/fastnsa_capi.cpp",
+      "sha256": "6b2f0d88dbedbc6ce0549e60ba409e5075054628b136bdf6a4d4dfeba0f320d7",
+      "source": "cpp/bindings/fastnsa_capi.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/bindings/fastnsa_capi.h",
+      "sha256": "be5b7d17f9e85d9bdb4a257ac649de3fa902037d6269a33bfbf413908884ad91",
+      "source": "cpp/bindings/fastnsa_capi.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/bindings/fastnsa_exports.map",
+      "sha256": "ee444fc6f5014e0fad3998bb4897e3ff2a72d14c3e775b481a4f48220eb772c3",
+      "source": "cpp/bindings/fastnsa_exports.map"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/Library.h",
+      "sha256": "3de44e836f85bf41463f94f1f4fd06e5011b95342ec8978cb9d3c9ce543bd5a3",
+      "source": "cpp/include/Library.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/earth/K_function.h",
+      "sha256": "9af27ff2bcdc9674ce9bf348c50d36dd1fc94936471d0d5e09b3bd0514d9ffe1",
+      "source": "cpp/include/earth/K_function.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/earth/Network.h",
+      "sha256": "1372268efeac914affac4946b7760e04cbd7d4185fc0badf3f3fa8eb6f2d40d7",
+      "source": "cpp/include/earth/Network.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/earth/SP.h",
+      "sha256": "438b1c3bd1bd8d028585a635b4b5947643aa2e1d2ac9f4f177ec02962ca6590b",
+      "source": "cpp/include/earth/SP.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/earth/count.h",
+      "sha256": "3091cc561fc33577cfd5ca685fae41dc2c047d11113cca20681c9e672e2410ce",
+      "source": "cpp/include/earth/count.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/earth/range_tree.h",
+      "sha256": "8f29552610e0cedf0c538ec78fa1e9d8bbb434f6df3dabfd1e9c5452c25c5617",
+      "source": "cpp/include/earth/range_tree.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/edge_offset.h",
+      "sha256": "034034552e926892d34602cb2b84bd2fdca4ab9165835084c752327ecd9236a3",
+      "source": "cpp/include/edge_offset.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/fastnsa.h",
+      "sha256": "c6d2c5c709b49a5ef2d8daf12358a66ada259d46d36a14278e7473ccd81d7369",
+      "source": "cpp/include/fastnsa.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/kdv/KAF.h",
+      "sha256": "204e2b7fff27b51af9947e80e15fd208044e4d512ac480b26d907fdd142356ec",
+      "source": "cpp/include/kdv/KAF.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/kdv/Network.h",
+      "sha256": "002fb75dcaca1a84d3485ad67bebffabab7cbc9310c3b340a148ad458128018e",
+      "source": "cpp/include/kdv/Network.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/kdv/alg_NKDV.h",
+      "sha256": "ef12b2b66118504ab7ed28a635879ea496ede71a241cbdd049561d4090da7153",
+      "source": "cpp/include/kdv/alg_NKDV.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/kdv/compute.h",
+      "sha256": "d08f67887921593af45b30353ce3b595350e7915bdf1d598f7a2e07ffc9f372f",
+      "source": "cpp/include/kdv/compute.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/kdv/lion.h",
+      "sha256": "32bc3264d071f217337834f12fc77711031586691a7113d5b046f389a3168908",
+      "source": "cpp/include/kdv/lion.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/kdv/shortest_path.h",
+      "sha256": "7c4758972f0e17059a53b9ec763ad04270c1f0715bab2c8d0c26e8cdd5e2a40b",
+      "source": "cpp/include/kdv/shortest_path.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/nne/core/NNE.h",
+      "sha256": "6e26a9ce537b1a62dc878b50aa1e220b1d184aec35511c19282fa764e5a10dc1",
+      "source": "cpp/include/nne/core/NNE.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/nne/core/SpatialGrid.h",
+      "sha256": "cfbb9e9bd0ec5095a3ff6a2251dfb03ca1cf138ecb611278220bc969a689eb3c",
+      "source": "cpp/include/nne/core/SpatialGrid.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/nne/core/Threading.h",
+      "sha256": "718fec1a452a3d9d065a88aa1149e3d6ded8dbec0b7d0305101a064225187af2",
+      "source": "cpp/include/nne/core/Threading.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/nne/geometry/Polyline.h",
+      "sha256": "e31c79448b62abf06d0786e69b05920d86fb9034ef6f67861185db2bd171279c",
+      "source": "cpp/include/nne/geometry/Polyline.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/nne/geometry/QueryPoint.h",
+      "sha256": "861d480b4a00666a7fd8e8976c88090a8dbdab56e1134c916ce07ce8ddbf5cad",
+      "source": "cpp/include/nne/geometry/QueryPoint.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/nne/index/PolylineBVH.h",
+      "sha256": "61c9363a6de44a74d5b985882f3bc3d7cfdca36e9f2d1987c534d9c51129774a",
+      "source": "cpp/include/nne/index/PolylineBVH.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/stars/K_function.h",
+      "sha256": "86c905ec0ff97eaa5d7dcf7b4f00bf12441396176ec039cd734195e5ef1c8eff",
+      "source": "cpp/include/stars/K_function.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/stars/Network.h",
+      "sha256": "70eb8754ff741d004b333a5e1a9fbff277eeb18a5f4b2b32f9fe43de76add3e8",
+      "source": "cpp/include/stars/Network.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/stars/SP.h",
+      "sha256": "56185162041c4581240b48c8fbc8c1a631902e81397b6fababb94d7de361a5c3",
+      "source": "cpp/include/stars/SP.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/stars/count.h",
+      "sha256": "56b6d775977fbf1dd47e539991c33962fbb6b90fef5f2a06ccfe62cae2920559",
+      "source": "cpp/include/stars/count.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/include/stars/sam_count.h",
+      "sha256": "e7c87a1b171d39d882fa94fc61186f3a59fb81fbf834efbb55760eb1542b8159",
+      "source": "cpp/include/stars/sam_count.h"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/earth/CMakeLists.txt",
+      "sha256": "b45fa224ee5be29e623dfdc44cdd1faa0f08296ee8f8e4a6d8fccca3ed21b2af",
+      "source": "cpp/src/earth/CMakeLists.txt"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/earth/K_function.cpp",
+      "sha256": "1f43858760e7335a9f46a339590a1bf731ae8255c70d43de609b0105496e6a8c",
+      "source": "cpp/src/earth/K_function.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/earth/Network.cpp",
+      "sha256": "1af6a3e07a91df94778b8d99cc59b3a3b6ac58a5be98d3dfee5be6006ac45191",
+      "source": "cpp/src/earth/Network.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/earth/SP.cpp",
+      "sha256": "0e43fd8d210abc61ca51c3790228564d7148e93e5bdbdc2a614f4442a30be032",
+      "source": "cpp/src/earth/SP.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/earth/count.cpp",
+      "sha256": "aa72d21b97489a38abcac9ee0c3e07f20c11f3aa03003d618175f0636f609147",
+      "source": "cpp/src/earth/count.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/earth/range_tree.cpp",
+      "sha256": "5e634193694b1bb48ca219f50a9545522b2c2d79b63d0e10e10e0098212445e5",
+      "source": "cpp/src/earth/range_tree.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/kdv/CMakeLists.txt",
+      "sha256": "a69604430cf3ac31fde622e295a8a7edc98f13bc391469099bef1902f1d52731",
+      "source": "cpp/src/kdv/CMakeLists.txt"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/kdv/KAF.cpp",
+      "sha256": "d252d399c9d8a23d78684530d225e6b6eafbed7749ce1fc339173e6602e06a50",
+      "source": "cpp/src/kdv/KAF.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/kdv/alg_NKDV.cpp",
+      "sha256": "c06f02360935f897b2400f3f8c8b276d965f8d33df49b117cc5de11fd658de86",
+      "source": "cpp/src/kdv/alg_NKDV.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/kdv/compute.cpp",
+      "sha256": "5b06b583cc0265fe48028fc11e1b0ac22f6a25f3f5217f5d6b468814b048ea4a",
+      "source": "cpp/src/kdv/compute.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/kdv/lion.cpp",
+      "sha256": "23e3e136f48792db6584e0560a27e603a852ee0d0d681063716b44e03ddc188f",
+      "source": "cpp/src/kdv/lion.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/kdv/shortest_path.cpp",
+      "sha256": "3346977e169c053390254881197dd0a6ce24da3a9bc866bb8079b15c1064b665",
+      "source": "cpp/src/kdv/shortest_path.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/nne/CMakeLists.txt",
+      "sha256": "c0a94c2d1bbf0f8fac9a5824ba6aa32c695f866d6d52bbffb8702e4985f4f81b",
+      "source": "cpp/src/nne/CMakeLists.txt"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/nne/core/NNE.cpp",
+      "sha256": "2afde0ab1b520c5748c00557410734bb0f5c8d1710e5f49a65e3650b5b34ae3f",
+      "source": "cpp/src/nne/core/NNE.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/nne/core/SpatialGrid.cpp",
+      "sha256": "d5f5354e22fc343cfb6a2802e48a0ac5fbf77f97b9bf44ac4c15bc15937f4756",
+      "source": "cpp/src/nne/core/SpatialGrid.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/nne/core/Threading.cpp",
+      "sha256": "990b1af3d1b3ff8d0ce9464d8784a6b53c2c4765a3574febd1d3b63df46f6f62",
+      "source": "cpp/src/nne/core/Threading.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/nne/geometry/Polyline.cpp",
+      "sha256": "bd2da028f816f0ddae6365fa98890569a6db8289139594225b3c3130b725823b",
+      "source": "cpp/src/nne/geometry/Polyline.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/nne/index/PolylineBVH.cpp",
+      "sha256": "a2f1ed693280167a3ed4c1cbc34cf7d8894d2a99d7cfb2ce35dd1af65ee93258",
+      "source": "cpp/src/nne/index/PolylineBVH.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/stars/CMakeLists.txt",
+      "sha256": "26d35d6de1c1292544536ae4b0d6f8820d799e9078519114baf5b702ff893c38",
+      "source": "cpp/src/stars/CMakeLists.txt"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/stars/K_function.cpp",
+      "sha256": "517f1c3ef6d876b9c7453a86c73ceca4d229cc93276f09479d1d50d304ed10c7",
+      "source": "cpp/src/stars/K_function.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/stars/Network.cpp",
+      "sha256": "40f8bf123d9f60d8bee7417aa7327163c263f4e4d86081bb50ce39721bc3f424",
+      "source": "cpp/src/stars/Network.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/stars/SP.cpp",
+      "sha256": "60cb74825a622d91a5c18ed8c54af0d8455e1f289f0722b65f4cc1440b20e42a",
+      "source": "cpp/src/stars/SP.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/stars/count.cpp",
+      "sha256": "26440ba54c5eeb8999aee346da97798b65b1abcfb249ac50d17cb70f0ba97d65",
+      "source": "cpp/src/stars/count.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/src/stars/sam_count.cpp",
+      "sha256": "ef687de8d04aebe7bcfea5ab3cd4fef6e61c9ae656e986eadf8e09965488e06e",
+      "source": "cpp/src/stars/sam_count.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/tests/CMakeLists.txt",
+      "sha256": "34b731ea4f9cd83f2fd401c5d3126f699c70303a7b11147fe4d0da920d6c5ea8",
+      "source": "cpp/tests/CMakeLists.txt"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/tests/test_capi_kfunction_safety.cpp",
+      "sha256": "27eacb06cd1d0d9e80b45b5d1dd8525f5f68edd149b92b3aa719bf7fe59aab45",
+      "source": "cpp/tests/test_capi_kfunction_safety.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/tests/test_capi_mapping.cpp",
+      "sha256": "8ed01ca63671f2f5120eac031ee70280f9130d539408070374065614cab56d3b",
+      "source": "cpp/tests/test_capi_mapping.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/tests/test_capi_network.cpp",
+      "sha256": "e6760d516497ff7c0ea56516faa2b1ad4d94e385fd12a585a93d647a13fbac9e",
+      "source": "cpp/tests/test_capi_network.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/tests/test_capi_nkdv.cpp",
+      "sha256": "7e2668ab76c3aff5c9b8772825b7bbcfb7d3142a56aa61ef46fa34e6f0600424",
+      "source": "cpp/tests/test_capi_nkdv.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/tests/test_capi_statistics.cpp",
+      "sha256": "daa1798195155bff9234d6eb6a56bde7117831eefd3a3fc3e9f62db66785b1cb",
+      "source": "cpp/tests/test_capi_statistics.cpp"
+    },
+    {
+      "mode": "100644",
+      "path": "cpp/tests/test_support.h",
+      "sha256": "6216c99e621a83d36eaeeacd40009463e7505b47d022878b7b3d914f6f26a6f9",
+      "source": "cpp/tests/test_support.h"
+    },
+    {
+      "mode": "100644",
+      "path": "pyproject.toml",
+      "sha256": "530b13141e37b211b7a0799ada4b42d2881ac5a4e1cdfc7807cbd5f4cecfc7a4",
+      "source": "pyproject.toml"
+    },
+    {
+      "mode": "100644",
+      "path": "python/LICENSE",
+      "sha256": "5fb011fc155156fb64214e15a5b614cc1b6f12a535fb14d2bfb61eb7b9d5afff",
+      "source": "python/LICENSE"
+    },
+    {
+      "mode": "100644",
+      "path": "python/README.md",
+      "sha256": "f9284d39f55bdeb7f154c6b7c7a7b340660713d10fb7b233fedbea34211f9054",
+      "source": "python/README.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/README_ZH.md",
+      "sha256": "ac9fd7f7263bad92915c85cb0d8ba43fff629c0631f26013691f0fa3719f6ad3",
+      "source": "python/docs/README_ZH.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/analyses.md",
+      "sha256": "50134cd4917e4adc4bf39c05594c46a4527e8c22fe8502a695b83fc3631c7132",
+      "source": "python/docs/analyses.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/api-reference.md",
+      "sha256": "3c4f371915797ffc91efe8666a2423e3968b34d44e99e462b3a5e8db1200360c",
+      "source": "python/docs/api-reference.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/data-model.md",
+      "sha256": "59969408d6b5284e34c27b43e6fe325d5dcea1a414f91f78b4d52823989b1b75",
+      "source": "python/docs/data-model.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/index.md",
+      "sha256": "ddac46e201277f0dfe896a747af954c127444bbbb749ad5990b167642dac786d",
+      "source": "python/docs/index.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/installation.md",
+      "sha256": "33e2d2e9fe57e93c3bab38894afb4911a1c6d81b7d4b461bd82c3d1ef34e05a2",
+      "source": "python/docs/installation.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/quickstart.md",
+      "sha256": "62d27e316afe599d59f5515bb4902a7c3e50671811ba0b6017b5f7f92c7c40c0",
+      "source": "python/docs/quickstart.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/references.md",
+      "sha256": "27457dd477f48abbab20a84f3ed4d761abb412c923dafcb472e72f607618797f",
+      "source": "python/docs/references.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/results.md",
+      "sha256": "19ba9df9bc185cbd6d1e3690689e5f5bbb9a552ee8ed46cfb043d4b9c798ef9f",
+      "source": "python/docs/results.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/docs/troubleshooting.md",
+      "sha256": "d46b2491c143a64106df9fc21f589157a22058d400a36c28c53df0fa7dc75234",
+      "source": "python/docs/troubleshooting.md"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/__init__.py",
+      "sha256": "0641cfeb29bce806cfcffd0809f9c4a5d77ee04ac88e9c543cff34e5bc523bee",
+      "source": "python/fastnsa/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/__init__.pyi",
+      "sha256": "95ce876e832219b54999b6ca74c3db53103a2d8fb6b77876472eafac48ed04e2",
+      "source": "python/fastnsa/__init__.pyi"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/_selftest.py",
+      "sha256": "c42e57d455f13187b9047a9d9389e46b6402a56c752485f757f39d72540072a2",
+      "source": "python/fastnsa/_selftest.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/bindings/__init__.py",
+      "sha256": "4a1426d0ed582f1ff2a1da8690e8a4909420c1e347dc177d3b18b17db232c827",
+      "source": "python/fastnsa/bindings/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/bindings/_lib.py",
+      "sha256": "d4e96ff8c81a7bdc3537115595b4ae1c11b29a593f8641963a73db62deb5713b",
+      "source": "python/fastnsa/bindings/_lib.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/bindings/capi.py",
+      "sha256": "5398603beff29ff7924d9983ae282c1d6315aea120553181dd82dc70a0aa117c",
+      "source": "python/fastnsa/bindings/capi.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/core/__init__.py",
+      "sha256": "f03278ca03fba1f429ca2f5e5d554d7bbbce84a757d09ecbc426832c341f1292",
+      "source": "python/fastnsa/core/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/core/events.py",
+      "sha256": "5e5cbecfd5e7269761acd2205c7ae08e4375f4a745cf17c6875c77510a37922a",
+      "source": "python/fastnsa/core/events.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/core/network.py",
+      "sha256": "85227ab04c7f11081529524f947c5a134cbca371d3d67dcfa55095ddc6bcb343",
+      "source": "python/fastnsa/core/network.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/core/types.py",
+      "sha256": "4e664d96f3248e7a2d896c0d2e799233be8cd9f8080284b25e47a01e649f715b",
+      "source": "python/fastnsa/core/types.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/datasets.py",
+      "sha256": "b2232ee22aa83dd132a2742a036c2fd577923c2e149938630e18d939a671244c",
+      "source": "python/fastnsa/datasets.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/enums.py",
+      "sha256": "f4b9959809f06cbef45d07d079e6a04471faa5939b0a7fb8010292a5a6fb7ea8",
+      "source": "python/fastnsa/enums.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/exceptions.py",
+      "sha256": "6749193bd06cab784fae4e8c9505dda1eefe7a29af1550274037e190ab33756b",
+      "source": "python/fastnsa/exceptions.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/io/__init__.py",
+      "sha256": "31cf2c0c3476b24033b2cbf547b80004fb89b820af5a1b4426003cd1fdee6675",
+      "source": "python/fastnsa/io/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/io/network.py",
+      "sha256": "b7f61be581f104c43c2385a528e9bfd2cfc4fb07a3d52b48859600932baa18ab",
+      "source": "python/fastnsa/io/network.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/io/points.py",
+      "sha256": "70f56e63b4bfc03f99834b9c3595f23b496284f585806239deb643e4920bfb6f",
+      "source": "python/fastnsa/io/points.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/io/results.py",
+      "sha256": "f7e5bce5534ba03baf8a3f47100284bfac13efaf9dc9409eb2b1e25392d06635",
+      "source": "python/fastnsa/io/results.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/pipeline/__init__.py",
+      "sha256": "a4f4873b32a2f98cc1a683de873183f11d8e4860f3abb90a47ae0c4cc06bc681",
+      "source": "python/fastnsa/pipeline/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/pipeline/preprocess.py",
+      "sha256": "a5675d3fcc71aff92e9539d0deb192441a5affdc50b203e1f00632c9ca336c66",
+      "source": "python/fastnsa/pipeline/preprocess.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/py.typed",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "source": "python/fastnsa/py.typed"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/runtime.py",
+      "sha256": "e2e3410b6ba6301da852f275628ec9caeb7d577002a6bf727919545b1c51cfd8",
+      "source": "python/fastnsa/runtime.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/stats/__init__.py",
+      "sha256": "639639da9bff42c0f8b44aa63462f64c3413c6cc89c5c33b0607a3e0d14dc36b",
+      "source": "python/fastnsa/stats/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/stats/k_function.py",
+      "sha256": "45b0f452423ecdb1888d226ce5d895a0fca7ec12ad53829c9d2a1ddd39c8121f",
+      "source": "python/fastnsa/stats/k_function.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/stats/network_kde.py",
+      "sha256": "5f6b4d3ae0674d15cc2f25288df36c4f40bd97003986f06081ca01f11877ec59",
+      "source": "python/fastnsa/stats/network_kde.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/fastnsa/utils/__init__.py",
+      "sha256": "0e477205a6e0638e9fae1e208c57066016bd86a79d02acf2842e815c00a9452d",
+      "source": "python/fastnsa/utils/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "python/requirements.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "python/requirements.txt"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/__init__.py",
+      "sha256": "b198ea502ffa329d3d74ee1b16422db97531339ced8e2000df8d9093ae8e46d2",
+      "source": "tests/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/integration/__init__.py",
+      "sha256": "794ffffd11a44e9bd26ed3e65bab26c1ddb8426442dbef57bf43ebcd41e461b1",
+      "source": "tests/integration/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/integration/test_osm_pipeline.py",
+      "sha256": "a334136b8a72b0a4f5657a4514157970ecc424b52da619f20762465144dd9f7a",
+      "source": "tests/integration/test_osm_pipeline.py"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/python/__init__.py",
+      "sha256": "f7767f64004949da240a80e2b7741e15f7b12b8c3ecae91ba90f99412ecc95bb",
+      "source": "tests/python/__init__.py"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/python/test_ctypes_api.py",
+      "sha256": "3abf4ee9ef8f0652616077dbb98b40b4287d9a62438326f755ade30f89307658",
+      "source": "tests/python/test_ctypes_api.py"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/python/test_geo_io.py",
+      "sha256": "2a5bff0a81f98eb24ac36be2299f3ca85155d776a5fd815a204437638d6dee47",
+      "source": "tests/python/test_geo_io.py"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/python/test_native_runtime.py",
+      "sha256": "3db664aceff4262b87a9e10530ea623971e12fba4b8d6e4f0b8b74988a234ecc",
+      "source": "tests/python/test_native_runtime.py"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/python/test_optional_network.py",
+      "sha256": "f4999573dd4693b9aa1034b29c96bd608cd5b6c4a43b1e2cf21badb632d428af",
+      "source": "tests/python/test_optional_network.py"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/python/test_runtime_api.py",
+      "sha256": "6fbac0b4572c23631c5ba73fd830a8c310233d7a8087d302523757cf71dffdb7",
+      "source": "tests/python/test_runtime_api.py"
+    },
+    {
+      "mode": "100644",
+      "path": "tools/ci/check_linux_wheel.py",
+      "sha256": "fbb49fe4ed02233191144ffc9aff301614cb80e78bfd2ff768302bae3585148e",
+      "source": "tools/ci/check_linux_wheel.py"
+    }
+  ],
+  "policy_sha256": "d391f87d84f8cfd5f814b7f8dedbdabfda837eb426d168f123f916ebef251537",
+  "release_approved": false,
+  "repository": "python",
+  "schema_version": 1,
+  "source_commit": "50be9796d24c4567d41a274c8a80dd1e06569fdc",
+  "warnings": []
+}
