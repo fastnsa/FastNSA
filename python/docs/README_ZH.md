@@ -10,7 +10,7 @@ FastNSA 是一个由 C++ 后端加速的网络约束空间点分析工具包，�
 - Monte Carlo 理论参考、包络和模拟 p-value；
 - CSV、DataFrame、NPZ 与 xarray 结果输出。
 
-本文面向 FastNSA 0.2.x。更完整的参数签名可查阅
+本文面向 FastNSA 0.3.x。更完整的参数签名可查阅
 [英文 API reference](api-reference.md)。
 
 ## 安装

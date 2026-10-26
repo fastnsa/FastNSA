@@ -26,6 +26,8 @@ in the plugin documentation.
 | [API reference](api-reference.md) | Public functions, classes, enums, exceptions, callbacks |
 | [Algorithm references](references.md) | Original papers, DOIs, and research artifacts |
 | [Troubleshooting](troubleshooting.md) | Loading failures, validation errors, crashes, performance |
+| [Release notes](releases/0.3.0.md) | Changes and compatibility for FastNSA 0.3.0 |
+| [Publishing](publishing.md) | Maintainer dry runs, protected uploads, and release recovery |
 
 ## Supported Analysis Pipeline
 
@@ -54,7 +56,7 @@ level, network length, and number of points needed to interpret an analysis.
 
 ## Version Scope
 
-These documents describe the public API of FastNSA 0.2.x. Native result files
+These documents describe the public API of FastNSA 0.3.x. Native result files
 include a format marker and should be loaded with fastnsa.load_result rather
 than by reading NPZ members directly.
 
