@@ -1,31 +1,68 @@
 # FastNSA
 
-Native-accelerated network spatial analysis for Python. This repository owns
-the Python package, C++ core, C ABI, and platform wheels. QGIS plugin sources
-are maintained in a separate repository.
+FastNSA is a Python toolkit for network-constrained spatial point analysis.
+It combines a C++ computational backend with Python APIs for studying events
+along road networks and other linear networks.
 
-- [Python package and quick start](python/README.md)
-- [User documentation](python/docs/index.md)
-- [Algorithm references](python/docs/references.md)
-- [License](LICENSE)
+## Features
 
-## Build and Test
+- Point-to-network matching and reusable event preprocessing.
+- Network kernel density estimation with ADA and LION, including event weights.
+- Network K-functions with exact and approximate methods.
+- Spatiotemporal network K-functions for events with time information.
+- Monte Carlo envelopes and reproducible simulations.
+- CSV and NPZ result storage, with optional pandas and xarray integration.
 
-Python 3.11 or newer, CMake 3.18 or newer, and a C++17 compiler are required
-for a source build. Compatible wheels include the native library.
+The lightweight array API requires NumPy. Optional integrations support
+GeoPandas, Shapely, NetworkX, OSMnx, and Matplotlib.
+
+## Installation
+
+Python 3.11 or newer is required. To install the current source version:
 
 ```bash
+git clone https://github.com/fastnsa/FastNSA.git
+cd FastNSA
 python -m pip install .
-python -m fastnsa._selftest
-python -m unittest discover -s tests/python -t . -v
-cmake -S cpp -B build/native -DCMAKE_BUILD_TYPE=Release -DFASTNSA_BUILD_TESTS=ON
-cmake --build build/native --config Release --parallel 2
-ctest --test-dir build/native -C Release --output-on-failure
 ```
 
-Network-dependent integration tests are opt-in; see their module docstrings.
-The native/wheel matrix covers Linux x86_64, Windows AMD64, and macOS Intel
-and Apple Silicon. CI success does not certify every external host environment.
+Building from source also requires CMake 3.18 or newer and a C++17 compiler.
+See the [installation guide](python/docs/installation.md) for wheel installation
+and optional dependencies.
 
-`EXPORT_PROVENANCE.json` records the upstream snapshot and exported file hashes.
-It is a provenance record, not a public release approval or a secret audit.
+## Quick Start
+
+This example uses a small built-in network and requires no GIS data files:
+
+```python
+import fastnsa as nsa
+
+with nsa.make_line_network(length=1000.0) as network:
+    with nsa.make_line_events(network, offsets=[100.0, 350.0, 700.0, 900.0]) as events:
+        result = nsa.network_k_function(
+            network=network,
+            points=events,
+            r_values=[50.0, 100.0, 250.0],
+            simulations=0,
+        )
+        print(result.to_records())
+```
+
+For real-world data, use a projected coordinate reference system with map
+units appropriate for distance analysis.
+
+## Documentation
+
+- [Package overview](python/README.md)
+- [User guide](python/docs/index.md)
+- [Quick start](python/docs/quickstart.md)
+- [Analysis methods](python/docs/analyses.md)
+- [API reference](python/docs/api-reference.md)
+- [Algorithm references](python/docs/references.md)
+- [Chinese guide](python/docs/README_ZH.md)
+
+## Support and License
+
+Report bugs and feature requests through the
+[issue tracker](https://github.com/fastnsa/FastNSA/issues).
+FastNSA is licensed under [LGPL-2.1-only](LICENSE).
